@@ -27,6 +27,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         TextView tvUsername;
         TextView tvLocation;
         TextView tvCreatedTime;
+        TextView tvLikesCount;
         ImageView ivPhoto;
         ImageView ivProfilePic;
     }
@@ -46,6 +47,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
             viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
             viewHolder.tvCreatedTime = (TextView) convertView.findViewById(R.id.tvCreatedTime);
             viewHolder.tvLocation = (TextView) convertView.findViewById(R.id.tvLocation);
+            viewHolder.tvLikesCount = (TextView) convertView.findViewById(R.id.tvLikesCount);
             viewHolder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
             viewHolder.tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
             viewHolder.ivProfilePic = (ImageView) convertView.findViewById(R.id.ivProfilePic);
@@ -55,9 +57,10 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
            viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.tvCaption.setText(photo.caption);
+        viewHolder.tvLikesCount.setText(photo.getLikesCount());
         viewHolder.tvCreatedTime.setText(photo.getCreatedTime());
         viewHolder.tvLocation.setText(photo.location);
-        viewHolder.tvUsername.setText("@" +photo.username);
+        viewHolder.tvUsername.setText("@" + photo.username);
         //viewHolder.ivPhoto.setImageResource(0);
         //viewHolder.ivProfilePic.setImageResource(0);
 

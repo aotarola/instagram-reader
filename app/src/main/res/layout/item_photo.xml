@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/imageFrame"
@@ -92,16 +93,31 @@
         </me.otarola.instagramreader.layouts.PercentLinearLayout>
 
     </FrameLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvCaption"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp"
         android:layout_below="@+id/imageFrame"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Test"
-        android:textSize="20sp"
-        android:ellipsize="end"
-        android:maxLines="3" />
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvLikesCount"
+            android:text="1999 likes"
+            android:ellipsize="end" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCaption"
+            android:textSize="20sp"
+            android:ellipsize="end"
+            android:maxLines="3" />
+    </LinearLayout>
 </RelativeLayout>
