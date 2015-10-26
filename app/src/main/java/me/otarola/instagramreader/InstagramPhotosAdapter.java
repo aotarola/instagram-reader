@@ -77,6 +77,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 .load(photo.profilePictureUrl)
                 .transform(transformation)
                 .resize(75, 75)
+                .placeholder(R.drawable.loading_animation)
                 .into(viewHolder.ivProfilePic);
 
         return convertView;

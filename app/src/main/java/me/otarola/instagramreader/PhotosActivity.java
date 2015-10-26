@@ -1,7 +1,9 @@
 package me.otarola.instagramreader;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -22,6 +24,8 @@ public class PhotosActivity extends AppCompatActivity {
     public static final String CLIENT_ID = "dbad3ae8b4af42c58a077627c4ef4d6d";
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdapter aPhotos;
+    private SwipeRefreshLayout swipeContainer;
+
 
 
     @Override
@@ -31,6 +35,23 @@ public class PhotosActivity extends AppCompatActivity {
         photos = new ArrayList<InstagramPhoto>();
         aPhotos = new InstagramPhotosAdapter(this, photos);
         ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchPopularPhotos();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         lvPhotos.setAdapter(aPhotos);
 
         fetchPopularPhotos();
@@ -47,6 +68,7 @@ public class PhotosActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 JSONArray photosJSON = null;
+                aPhotos.clear();
 
                 try {
                     photosJSON = response.getJSONArray("data");
@@ -74,6 +96,7 @@ public class PhotosActivity extends AppCompatActivity {
                         photo.likesCount = photoJSON.getJSONObject("likes").getInt("count");
 
                         photos.add(photo);
+                        swipeContainer.setRefreshing(false);
                     }
                 } catch (JSONException e){
                     e.printStackTrace();
