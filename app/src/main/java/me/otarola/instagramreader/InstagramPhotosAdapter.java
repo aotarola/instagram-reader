@@ -58,8 +58,8 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         viewHolder.tvCreatedTime.setText(photo.getCreatedTime());
         viewHolder.tvLocation.setText(photo.location);
         viewHolder.tvUsername.setText("@" +photo.username);
-        viewHolder.ivPhoto.setImageResource(0);
-        viewHolder.ivProfilePic.setImageResource(0);
+        //viewHolder.ivPhoto.setImageResource(0);
+        //viewHolder.ivProfilePic.setImageResource(0);
 
         Transformation transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(30)
