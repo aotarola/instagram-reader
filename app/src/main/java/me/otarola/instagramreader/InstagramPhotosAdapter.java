@@ -18,6 +18,11 @@ import java.util.List;
  */
 public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
+    private static class ViewHolder {
+        TextView tvCaption;
+        ImageView ivPhoto;
+    }
+
     public InstagramPhotosAdapter(Context context, List<InstagramPhoto> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }
@@ -26,17 +31,20 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
     public View getView(int position, View convertView, ViewGroup parent){
         InstagramPhoto photo = getItem(position);
 
+        ViewHolder viewHolder;
         if(convertView == null){
+            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
+            viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
+            viewHolder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
+            convertView.setTag(viewHolder);
         }
-
-        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
-        ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
-
-        tvCaption.setText(photo.caption);
-
-        ivPhoto.setImageResource(0);
-        Picasso.with(getContext()).load(photo.imageUrl).into(ivPhoto);
+        else{
+           viewHolder = (ViewHolder) convertView.getTag();
+        }
+        viewHolder.tvCaption.setText(photo.caption);
+        viewHolder.ivPhoto.setImageResource(0);
+        Picasso.with(getContext()).load(photo.imageUrl).into(viewHolder.ivPhoto);
         return convertView;
     }
 }

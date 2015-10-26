@@ -5,6 +5,7 @@ package me.otarola.instagramreader;
  */
 public class InstagramPhoto {
     public String username;
+    public String usernameImageUrl;
     public String caption;
     public String imageUrl;
     public int imageHeight;
