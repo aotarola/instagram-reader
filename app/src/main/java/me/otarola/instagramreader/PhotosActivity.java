@@ -2,7 +2,6 @@ package me.otarola.instagramreader;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -55,11 +54,22 @@ public class PhotosActivity extends AppCompatActivity {
                         JSONObject photoJSON = photosJSON.getJSONObject(i);
                         InstagramPhoto photo = new InstagramPhoto();
                         photo.username = photoJSON.getJSONObject("user").getString("username");
-                        photo.caption = photoJSON.getJSONObject("caption").getString("text");
-                        photo.usernameImageUrl = photoJSON.getJSONObject("user").getString("profile_picture");
+                        if (!photoJSON.isNull("caption")) {
+                            photo.caption = photoJSON.getJSONObject("caption").getString("text");
+                        }
+                        else{
+                            photo.caption = "";
+                        }
+                        photo.profilePictureUrl = photoJSON.getJSONObject("user").getString("profile_picture");
                         //photo.type = photoJSON.getJSONObject("caption").getString("text");
-                        //photo.caption = photoJSON.getJSONObject("caption").getString("text");
+                            if (!photoJSON.isNull("location")) {
+                            photo.location = photoJSON.getJSONObject("location").getString("name");
+                        }
+                        else{
+                            photo.location = "";
+                        }
                         photo.imageUrl = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
+                        photo.created_time = photoJSON.getInt("created_time");
                         photo.imageHeight = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getInt("height");
                         photo.likesCount = photoJSON.getJSONObject("likes").getInt("count");
 

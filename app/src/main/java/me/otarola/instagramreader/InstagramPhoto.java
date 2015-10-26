@@ -5,9 +5,15 @@ package me.otarola.instagramreader;
  */
 public class InstagramPhoto {
     public String username;
-    public String usernameImageUrl;
+    public String profilePictureUrl;
     public String caption;
+    public String location;
     public String imageUrl;
     public int imageHeight;
+    public long created_time;
     public int likesCount;
+
+    public String getCreatedTime(){
+        return "10w";
+    }
 }
