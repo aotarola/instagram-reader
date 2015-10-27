@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -25,8 +26,6 @@ public class PhotosActivity extends AppCompatActivity {
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdapter aPhotos;
     private SwipeRefreshLayout swipeContainer;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,9 @@ public class PhotosActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                JSONArray photosJSON = null;
+                JSONArray photosJSON;
+                JSONArray comments;
+                JSONObject comment;
                 aPhotos.clear();
 
                 try {
@@ -76,12 +77,6 @@ public class PhotosActivity extends AppCompatActivity {
                         JSONObject photoJSON = photosJSON.getJSONObject(i);
                         InstagramPhoto photo = new InstagramPhoto();
                         photo.username = photoJSON.getJSONObject("user").getString("username");
-                        if (!photoJSON.isNull("caption")) {
-                            photo.caption = photoJSON.getJSONObject("caption").getString("text");
-                        }
-                        else{
-                            photo.caption = "";
-                        }
                         photo.profilePictureUrl = photoJSON.getJSONObject("user").getString("profile_picture");
                         //photo.type = photoJSON.getJSONObject("caption").getString("text");
                             if (!photoJSON.isNull("location")) {
@@ -89,6 +84,15 @@ public class PhotosActivity extends AppCompatActivity {
                         }
                         else{
                             photo.location = "";
+                        }
+
+                        comments = photoJSON.getJSONObject("comments").getJSONArray("data");
+
+                        for (int j = 0; j < comments.length(); j++) {
+                            comment = comments.getJSONObject(j);
+                            photo.comments.add(new InstagramPhotoComment(
+                                    comment.getJSONObject("from").getString("username"),
+                                    comment.getString("text")));
                         }
                         photo.imageUrl = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
                         photo.createdTime = photoJSON.getInt("created_time");

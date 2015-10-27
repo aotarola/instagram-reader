@@ -2,6 +2,7 @@ package me.otarola.instagramreader;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 /**
  * Created by aotarolaalvarad on 10/24/15.
@@ -9,12 +10,16 @@ import java.util.Date;
 public class InstagramPhoto {
     public String username;
     public String profilePictureUrl;
-    public String caption;
     public String location;
+    public ArrayList<InstagramPhotoComment> comments;
     public String imageUrl;
     public int imageHeight;
     public long createdTime;
     public int likesCount;
+
+    public InstagramPhoto(){
+        comments = new ArrayList<InstagramPhotoComment>();
+    }
 
     public String getCreatedTime(){
         PrettyTime p = new PrettyTime();
